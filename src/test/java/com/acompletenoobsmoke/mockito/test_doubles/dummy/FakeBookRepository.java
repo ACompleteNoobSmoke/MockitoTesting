@@ -1,4 +1,4 @@
-package com.acompletenoobsmoke.mockito.test_doubles.fake;
+package com.acompletenoobsmoke.mockito.test_doubles.dummy;
 
 import com.acompletenoobsmoke.mockito.test_doubles.fake.Book;
 import com.acompletenoobsmoke.mockito.test_doubles.fake.BookRepository;
