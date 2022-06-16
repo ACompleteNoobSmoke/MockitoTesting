@@ -56,4 +56,24 @@ public class BookServiceTest {
 
         assertEquals(950, totalPrice);
     }
+
+    @Test
+    public void testCalculate2(){
+        List<String> bookIDs = new ArrayList<>();
+        bookIDs.add("11223");
+        bookIDs.add("11224");
+        bookIDs.add("11225");
+
+        Book newBook = new Book("11223", "The Bourne Supremacy", 500, LocalDate.now());
+        Book newBook2 = new Book("11224", "Aladdin", 450, LocalDate.now());
+        Book newBook3 = new Book("11225", "The Dark Tower", 50, LocalDate.now());
+        List<Book> returnedBooks = new ArrayList<>();
+        returnedBooks.add(newBook);
+        returnedBooks.add(newBook2);
+        returnedBooks.add(newBook3);
+        doReturn(returnedBooks).when(bookRepository).findNewBooks(1);
+        int totalPrice = bookService.calculateTotalCost2(bookIDs);
+
+        assertEquals(1000, totalPrice);
+    }
 }
