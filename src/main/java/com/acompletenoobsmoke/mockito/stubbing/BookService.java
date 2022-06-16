@@ -44,5 +44,22 @@ public class BookService {
         return total;
     }
 
+    public void addBook(Book newBook){
+        if(newBook == null) return;
+        if(bookRepository.
+                findBookByID(newBook.getBookID()) == null)
+            return;
+        bookRepository.save(newBook);
+    }
+
+    public void addBook(BookRequest bookRequest){
+        if(bookRequest == null) return;
+        Book newBook = new Book();
+        newBook.setBookTitle(bookRequest.getBookTitle());
+        newBook.setBookPrice(bookRequest.getBookPrice());
+        newBook.setPublishedDate(bookRequest.getPublishedDate());
+        bookRepository.save(newBook);
+    }
+
 
 }

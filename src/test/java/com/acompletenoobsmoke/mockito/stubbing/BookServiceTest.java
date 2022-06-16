@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.LocalDate;
@@ -11,8 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 public class BookServiceTest {
@@ -75,5 +75,21 @@ public class BookServiceTest {
         int totalPrice = bookService.calculateTotalCost2(bookIDs);
 
         assertEquals(1000, totalPrice);
+    }
+
+    @Test
+    public void testSave(){
+        Book newBook = new Book(null, "The Bourne Supremacy", 500, LocalDate.now());
+        lenient().doNothing().when(bookRepository).save(newBook);
+        bookService.addBook(newBook);
+    }
+
+    @Test
+    public void testSaveWithBookRequest(){
+        BookRequest bookRequest = new BookRequest("Cell", 859, LocalDate.now());
+        Book newBook = new Book(null, "Cell", 859, LocalDate.now());
+        doNothing().when(bookRepository).save(newBook);
+        bookService.addBook(bookRequest);
+
     }
 }
