@@ -29,4 +29,13 @@ public class BookService {
         newBook.setPublishedDate(bookRequest.getPublishedDate());
         bookRepository.save(newBook);
     }
+
+    public void updatePrice(String bookID, int updatedPrice){
+        if(bookID != null){
+            Book foundBook = bookRepository.findBookByID(bookID);
+            if(foundBook == null) return;
+            foundBook.setBookPrice(updatedPrice);
+            bookRepository.save(foundBook);
+        }
+    }
 }
