@@ -1,6 +1,5 @@
 package com.acompletenoobsmoke.mockito.behavior.verification;
 
-import com.acompletenoobsmoke.mockito.stubbing.BookRequest;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -29,5 +28,25 @@ public class BookServiceTest {
                 700, LocalDate.now());
         bookService.addBook(newBook);
         verify(bookRepository).save(newBook);
+    }
+
+    @Test
+    public void testAddBookWithGuardCode(){
+        Book newBook = new Book("1122", "Stephen King's IT",
+                300, LocalDate.now());
+        BookRequest newBookRequest = new BookRequest("Stephen King's IT",
+                300, LocalDate.now());
+        bookService.addBook(newBookRequest);
+        verify(bookRepository, never()).save(newBook);
+    }
+
+    @Test
+    public void testAddBookWithGuardCode1(){
+        Book newBook = new Book("1122", "Stephen King's IT",
+                700, LocalDate.now());
+        BookRequest newBookRequest = new BookRequest("Stephen King's IT",
+                700, LocalDate.now());
+        bookService.addBook(newBookRequest);
+        verify(bookRepository, times(1)).save(newBook);
     }
 }

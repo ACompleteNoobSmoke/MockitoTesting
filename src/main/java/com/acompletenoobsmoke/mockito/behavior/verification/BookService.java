@@ -1,7 +1,5 @@
 package com.acompletenoobsmoke.mockito.behavior.verification;
 
-import com.acompletenoobsmoke.mockito.stubbing.BookRequest;
-
 import java.util.List;
 
 public class BookService {
@@ -19,6 +17,16 @@ public class BookService {
 //                bookRepository.findBookByTitle(newBook.getBookTitle()) == null)
 //            return;
         System.out.println("I will become better");
+        bookRepository.save(newBook);
+    }
+
+    public void addBook(BookRequest bookRequest){
+        if(bookRequest == null) return;
+        if(bookRequest.getBookPrice() <= 500) return;
+        Book newBook = new Book();
+        newBook.setBookTitle(bookRequest.getBookTitle());
+        newBook.setBookPrice(bookRequest.getBookPrice());
+        newBook.setPublishedDate(bookRequest.getPublishedDate());
         bookRepository.save(newBook);
     }
 }
