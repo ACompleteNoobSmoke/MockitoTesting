@@ -71,4 +71,11 @@ public class BookServiceTest {
         bookService.updatePrice(null, 1000);
         verifyNoInteractions(bookRepository);
     }
+
+    @Test
+    public void testUpdatePriceNoMoreInteraction(){
+        when(bookRepository.findBookByID("1155")).thenReturn(null);
+        bookService.updatePrice("1155", 1000);
+        verifyNoMoreInteractions(bookRepository);
+    }
 }
