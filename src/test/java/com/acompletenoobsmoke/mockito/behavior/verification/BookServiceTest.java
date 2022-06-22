@@ -92,4 +92,18 @@ public class BookServiceTest {
         inOrder.verify(bookRepository).findBookByID("1111");
         inOrder.verify(bookRepository).save(newBook);
     }
+
+    @Test
+    public void testUpdatePriceAtLeastNTimes(){
+        Book newBook = new Book("1122", "Angry White Blonde",
+                900, LocalDate.now());
+        when(bookRepository.findBookByID("1122")).thenReturn(newBook);
+        bookService.updatePrice("1122", 1000);
+        bookService.updatePrice("1122", 1100);
+        bookService.updatePrice("1122", 1200);
+        //verify(bookRepository, atLeastOnce()).save(newBook);
+        //verify(bookRepository, atLeast(2)).save(newBook);
+        verify(bookRepository, atMost(3)).save(newBook);
+        //verify(bookRepository, atMostOnce()).save(newBook);
+    }
 }
