@@ -2,8 +2,10 @@ package com.acompletenoobsmoke.mockito.behavior.verification;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InOrder;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.LocalDate;
@@ -77,5 +79,17 @@ public class BookServiceTest {
         when(bookRepository.findBookByID("1155")).thenReturn(null);
         bookService.updatePrice("1155", 1000);
         verifyNoMoreInteractions(bookRepository);
+    }
+
+    @Test
+    public void testUpdatePriceInOrder(){
+        Book newBook = new Book("1111", "The Bourne Identity",
+                700, LocalDate.now());
+        when(bookRepository.findBookByID("1111")).thenReturn(newBook);
+        bookService.updatePrice("1111", 1100);
+
+        InOrder inOrder = Mockito.inOrder(bookRepository);
+        inOrder.verify(bookRepository).findBookByID("1111");
+        inOrder.verify(bookRepository).save(newBook);
     }
 }
