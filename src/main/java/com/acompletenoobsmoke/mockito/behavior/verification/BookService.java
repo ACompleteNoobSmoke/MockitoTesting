@@ -1,5 +1,6 @@
 package com.acompletenoobsmoke.mockito.behavior.verification;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public class BookService {
@@ -37,5 +38,9 @@ public class BookService {
             foundBook.setBookPrice(updatedPrice);
             bookRepository.save(foundBook);
         }
+    }
+
+    public Book getBookTitleAndPublishedDate(String title, LocalDate localDate){
+        return bookRepository.findBookByTitleAndPublishedDate(title, localDate);
     }
 }

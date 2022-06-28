@@ -14,6 +14,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.LocalDate;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -32,5 +33,16 @@ public class BookServiceTest {
         when(bookRepository.findBookByID(any())).thenReturn(newBook1);
         bookService.updatePrice(newBook1.getBookID(), 1000);
         verify(bookRepository).save(newBook2);
+    }
+
+    //Argument Matchers should be provided for all arguments
+    //Argument Matchers cannot be used outside stubbing or behavior verification
+
+    @Test
+    public void testInvalidUseOfArgumentMatchers(){
+        Book book = new Book("1134", "Naruto: Shippuden", 1100, LocalDate.now());
+        when(bookRepository.findBookByTitleAndPublishedDate(book.getBookTitle(), any(LocalDate.class))).thenReturn(book);
+        Book returnBook = bookService.getBookTitleAndPublishedDate(book.getBookTitle(), book.getPublishedDate());
+        assertEquals(book.getBookTitle(), returnBook.getBookTitle());
     }
 }
