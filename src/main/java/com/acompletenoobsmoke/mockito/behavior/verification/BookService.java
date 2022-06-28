@@ -21,6 +21,11 @@ public class BookService {
         bookRepository.save(newBook);
     }
 
+    public void addBooks(List<Book> allBooks){
+        if(allBooks == null || allBooks.isEmpty()) return;
+        bookRepository.saveAll(allBooks);
+    }
+
     public void addBook(BookRequest bookRequest){
         if(bookRequest == null) return;
         if(bookRequest.getBookPrice() <= 500) return;
@@ -42,5 +47,9 @@ public class BookService {
 
     public Book getBookTitleAndPublishedDate(String title, LocalDate localDate){
         return bookRepository.findBookByTitleAndPublishedDate(title, localDate);
+    }
+
+    public Book getBookTitleAndPriceAndIsDigital(String title, int price, boolean isDigital){
+        return bookRepository.findBookByTitleAndPriceAndIsDigital(title, price, isDigital);
     }
 }

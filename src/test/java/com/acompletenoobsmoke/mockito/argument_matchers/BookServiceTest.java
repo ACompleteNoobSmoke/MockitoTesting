@@ -13,6 +13,8 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.LocalDate;
+import java.util.Arrays;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
@@ -44,5 +46,31 @@ public class BookServiceTest {
         when(bookRepository.findBookByTitleAndPublishedDate(book.getBookTitle(), any(LocalDate.class))).thenReturn(book);
         Book returnBook = bookService.getBookTitleAndPublishedDate(book.getBookTitle(), book.getPublishedDate());
         assertEquals(book.getBookTitle(), returnBook.getBookTitle());
+    }
+
+    @Test
+    public void testSpecificTypeOfArgumentMatcher(){
+        Book book = new Book("1111", "Vampire Hunter D", 800, LocalDate.now(), true);
+        when(bookRepository.findBookByTitleAndPriceAndIsDigital(anyString(), anyInt(), anyBoolean())).thenReturn(book);
+        Book foundBook = bookService.getBookTitleAndPriceAndIsDigital("Hello", 123, false);
+        assertEquals(book.getBookTitle(), foundBook.getBookTitle());
+    }
+
+    @Test
+    public void testCollectionTypeArgumentMatcher(){
+        Book newBook1 = new Book("1111", "Coding Is The Best", 600, LocalDate.now());
+        Book newBook2 = new Book("1112", "I Will Become Better", 800, LocalDate.now());
+        Book newBook3 = new Book("1113", "Just Be Patient & Work Hard", 900, LocalDate.now());
+        List<Book> bookList = Arrays.asList(newBook1, newBook2, newBook3);
+        bookService.addBooks(bookList);
+        verify(bookRepository).saveAll(anyList());
+    }
+
+    @Test
+    public void testStringTypeArgumentMatcher(){
+        Book newBook = new Book("1111", "David vs Goliath", 900, LocalDate.now());
+        when(bookRepository.findBookByTitleAndPublishedDate(startsWith("David"), any(LocalDate.class))).thenReturn(newBook);
+        Book foundBook = bookService.getBookTitleAndPublishedDate("David anything", LocalDate.now());
+        assertEquals(newBook.getBookTitle(), foundBook.getBookTitle());
     }
 }

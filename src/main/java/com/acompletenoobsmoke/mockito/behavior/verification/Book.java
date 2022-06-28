@@ -8,6 +8,7 @@ public class Book {
     private String bookTitle;
     private int bookPrice;
     private LocalDate publishedDate;
+    private boolean isDigital;
 
     public Book(){}
 
@@ -16,6 +17,15 @@ public class Book {
         this.bookTitle = bookTitle;
         this.bookPrice = bookPrice;
         this.publishedDate = publishedDate;
+        this.isDigital = false;
+    }
+
+    public Book(String bookID, String bookTitle, int bookPrice, LocalDate publishedDate, boolean isDigital) {
+        this.bookID = bookID;
+        this.bookTitle = bookTitle;
+        this.bookPrice = bookPrice;
+        this.publishedDate = publishedDate;
+        this.isDigital = isDigital;
     }
 
     public String getBookID() {
@@ -49,6 +59,10 @@ public class Book {
     public void setPublishedDate(LocalDate publishedDate) {
         this.publishedDate = publishedDate;
     }
+
+    public boolean getDigital(){ return isDigital; }
+
+    public void setDigital(boolean isDigital){ this.isDigital = isDigital;}
 
     @Override
     public boolean equals(Object o) {

@@ -8,5 +8,7 @@ public interface BookRepository {
     Book findBookByID(String id);
     Book findBookByTitle(String title);
     Book findBookByTitleAndPublishedDate(String title, LocalDate localDate);
+    Book findBookByTitleAndPriceAndIsDigital(String title, int price, boolean isDigital);
     void save(Book newBook);
+    void saveAll(List<Book> allBooks);
 }
