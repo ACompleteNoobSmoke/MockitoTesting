@@ -1,4 +1,4 @@
-package com.acompletenoobsmoke.mockito.bdd.behavior_verificaion.Film;
+package com.acompletenoobsmoke.mockito.test_doubles.stub.Film;
 
 import java.time.LocalDate;
 

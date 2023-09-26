@@ -1,24 +1,24 @@
-package com.acompletenoobsmoke.mockito.bdd.behavior_verificaion.Film;
+package com.acompletenoobsmoke.mockito.test_doubles.dummy.Film;
 
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
-import java.util.Collection;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class FilmServiceTest {
 
-    private FilmService underTest;
-    private  FilmRepository filmRepository;
+   private FilmService underTest;
+   private FilmRepository filmRepository;
+   private FilmEmailService emailService;
 
     @BeforeEach
     public void setUp() {
         this.filmRepository = new FakeFilmRepository();
-        this.underTest = new FilmService(filmRepository);
+        this.emailService = new DummyEmailService();
+        this.underTest = new FilmService(filmRepository, emailService);
     }
 
     @Test

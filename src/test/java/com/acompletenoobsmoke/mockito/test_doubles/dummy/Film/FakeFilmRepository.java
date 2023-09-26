@@ -1,8 +1,10 @@
-package com.acompletenoobsmoke.mockito.bdd.behavior_verificaion.Film;
+package com.acompletenoobsmoke.mockito.test_doubles.dummy.Film;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
-public class FakeFilmRepository implements FilmRepository{
+public class FakeFilmRepository implements FilmRepository {
 
     Map<String, Film> filmStore = new HashMap<>();
 
