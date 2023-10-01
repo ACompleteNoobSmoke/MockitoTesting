@@ -2,11 +2,18 @@ package com.acompletenoobsmoke.mockito.test_doubles.fake.Film;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentCaptor;
+import org.mockito.Mockito;
 
 import java.time.LocalDate;
+import java.util.Collection;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.BDDMockito.given;
+import static org.mockito.BDDMockito.then;
+import static org.mockito.Mockito.*;
 
 class FilmServiceTest {
 
@@ -36,5 +43,29 @@ class FilmServiceTest {
         underTest.addFilm(film2);
         //Then
         assertEquals(2, underTest.findNumberOfFilms());
+    }
+
+    @Test
+    void testFakeWithMockito() {
+        FilmRepository filmRepositoryMock = mock(FilmRepository.class);
+        FilmService underTestMock = new FilmService(filmRepositoryMock);
+        Film newFilm = new Film("3", "Max Payne", 35, LocalDate.now());
+        Film newFilm2 = new Film("1", "Hard Boiled", 89, LocalDate.now());
+        Collection<Film> filmList = List.of(newFilm, newFilm2);
+        when(filmRepositoryMock.findAll()).thenReturn(filmList);
+        assertEquals(2, underTestMock.findNumberOfFilms());
+    }
+
+    @Test
+    void testSaveWithMockito() {
+        FilmRepository filmRepositoryMock = mock(FilmRepository.class);
+        FilmService underTestMock = new FilmService(filmRepositoryMock);
+        Film newFilm = new Film("5", "Finding Nemo", 90, LocalDate.now());
+        ArgumentCaptor<Film> filmArgumentCaptor = ArgumentCaptor.forClass(Film.class);
+        underTestMock.addFilm(newFilm);
+        verify(filmRepositoryMock).save(filmArgumentCaptor.capture());
+
+        Film capturedFilm = filmArgumentCaptor.getValue();
+        assertThat(capturedFilm).isNotNull().usingRecursiveComparison().isEqualTo(newFilm);
     }
 }

@@ -4,9 +4,13 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
+import java.util.Collection;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 class FilmServiceTest {
 
@@ -38,5 +42,21 @@ class FilmServiceTest {
         underTest.addFilm(film2);
         //Then
         assertEquals(2, underTest.findNumberOfFilms());
+    }
+
+    @Test
+    void demoDummyWithMockito() {
+        FilmRepository filmRepository = mock(FilmRepository.class);
+        DummyEmailService emailService = mock(DummyEmailService.class);
+        FilmService filmService = new FilmService(filmRepository, emailService);
+
+        Film film1 = new Film("1", "Black Panther", 30, LocalDate.now());
+        Film film2 = new Film("2", "Black Panther: Way Of The Water", 30, LocalDate.now());
+        Collection<Film> filmCollection = List.of(film1, film2);
+
+        when(filmRepository.findAll()).thenReturn(filmCollection);
+
+        assertEquals(2, filmService.findNumberOfFilms());
+
     }
 }
