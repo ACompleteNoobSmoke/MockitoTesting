@@ -1,4 +1,4 @@
-package com.acompletenoobsmoke.mockito.annotations.support.Film;
+package com.acompletenoobsmoke.mockito.bdd.behavior_verificaion.Film;
 
 import java.util.Collection;
 import java.util.List;
@@ -6,6 +6,6 @@ import java.util.List;
 public interface FilmRepository {
     void save(Film film);
     Collection<Film> findAll();
-    List<Film> findNewBooks(int days);
-    Film findFilmByID(String filmID);
+    List<Film> findNewFilms(int days);
+    Film findFilmByID(String bookID);
 }
